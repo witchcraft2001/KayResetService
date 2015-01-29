@@ -1,0 +1,236 @@
+
+;‚›Ž “‘’Ž‰‘’‚€ „‹Ÿ ‡€ƒ“‡Šˆ
+FATBOOT		LD HL,ADRTBLDIRL
+		LD (DIR_LEVEL),HL		;“‘’€Ž‚ˆ‹ˆ „Ž ‘’…Š€ ‘Ž•€…ˆ‰ ŽŠŽ˜…Š
+		LD HL,FLAGS
+		SET 3,(HL)			;€Ž’€’œ “„…Œ ‘ FAT
+		CALL COM_DEV
+		DB Devfind			;‘Š€ˆŽ‚€ˆ… “‘’Ž‰‘’‚
+		JP C,_STUPID			;Ž˜ˆŠ€, ˆ Ž„ŽƒŽ €‡„…‹€ … €‰„…Ž
+		LD B,E				;‘—…’—ˆŠ ŠŽ‹ˆ—…‘’‚€ €‰„…›• €‡„…‹Ž‚
+		LD IX,SEL_FAT_DEV		;€„…‘ Žˆ‘€’…‹Ÿ ŽŠ€ ‚›Ž€ €‡„…‹Ž‚
+		LD (IX+0X10),E			;ŠŽ‹ˆ—…‘’‚Ž “Š’Ž‚ ‚ ŽŠ…
+		INC E
+		INC E
+		LD (IX+2),E			;“‘’€Ž‚ˆ‹ˆ ‚›‘Ž’“ ‚›‚Ž„ˆŒŽƒŽ ŽŠ€
+		LD DE,6				;˜€ƒ Ž ’€‹ˆ–… €‰„…›• €‡„…‹Ž‚ -2
+		EXX
+		LD HL,TXT_FAT_SEL
+		LD DE,SEL_FAT_DRV		;€„…‘ ƒ„… “„…’ ”ŽŒˆŽ‚€’œ‘Ÿ ’…Š‘’ ŽŠ€ ‚›Ž€ €‡„…‹Ž‚
+		LD BC,ETXT_FAT_SEL-TXT_FAT_SEL
+		LDIR
+		EX DE,HL
+		EXX
+FATBOOT1	EXX
+		LD (HL),0X0D
+		INC HL
+		LD (HL),3
+		INC HL
+		EXX
+		LD A,(HL)			;‚‡Ÿ‹ˆ ŽŒ… €‡„…‹€
+		INC HL
+		LD C,(HL)			;MASTER ˆ‹ˆ SLAVE
+		INC HL
+		ADD A,C
+		ADD A,C
+		SUB 4				;-4, ˆŽ „ˆ‘ŠŽ‚Ž„› … “—ˆ’›‚€ž’‘Ÿ
+		ADD A,A
+		ADD A,A
+		ADD A,A
+		ADD A,A				;“ŒŽ†…Ž € 16
+		EXX
+		EX DE,HL
+		LD HL,TXT4MENU_DEVICE		;€„…‘ ’€‹ˆ–› ’…Š‘’€ Ž €‡„…‹€•
+		LD C,A
+		LD B,0
+		ADD HL,BC			;Ž‹“—ˆ‹ˆ €„…‘ Ž’Š“„€ ’…Š‘’ ‚‡Ÿ’œ
+		LD BC,0X10			;„‹ˆ€ ……Ž‘€ 16 €‰’
+		EXX
+		LD A,L
+		EXX
+		RRCA
+		RRCA
+		RRCA
+		AND 0X1F
+		ADD A,"E"			;“Š‚€ €‰„…ŽƒŽ “‘’Ž‰‘’‚€
+		LD (DE),A
+		INC DE
+		LDIR				;……Ž‘ ’…Š‘’€ ˆ‡ ‚›€Ž‰ ’€‹ˆ–›
+		EXX
+		LD A,(HL)			;’ˆ €‡„…‹€
+		EXX
+		LD C,A
+		ADD A,A
+		ADD A,A
+		ADD A,C				;“ŒŽ†…Ž € 5
+		LD HL,TXT4MENU_TYPE		;€„…‘ ’€‹ˆ–› ’…Š‘’€ ’ˆŽ‚ €‡„…‹Ž‚
+		LD C,A
+		ADD HL,BC
+		LD C,5
+		LDIR				;……Ž‘ ’…Š‘’€ ˆ‡ ‚›€Ž‰ ’€‹ˆ–›
+		EX DE,HL
+		EXX
+		ADD HL,DE
+		DJNZ FATBOOT1
+		EXX
+		LD (HL),0
+		INC HL
+		LD B,(IX+2)
+		DEC B
+		DEC B
+		LD C,B
+		LD A,"e"
+		LD (HL),B
+		INC HL
+FATBOOT3	LD (HL),A			;”ŽŒˆŽ‚€ˆ… ’€‹ˆ–› ƒŽŸ—ˆ• Š‹€‚ˆ˜
+		INC HL
+		INC A
+		DJNZ FATBOOT3
+		LD (SELFATDEVEXE),HL		;Ž‹Ž†ˆ‹ˆ €„…‘ ’€‹ˆ–› €„…‘Ž‚ ‚›‡Ž‚€ ‚›€ŽƒŽ
+		LD B,C
+FATBOOT2	LD (HL),LOW (SEL_FAT)		;”ŽŒˆŽ‚€ˆ… ’€‹ˆ–› €„…‘Ž‚ ‚›‡›‚Ž‚
+		INC HL
+		LD (HL),HIGH (SEL_FAT)
+		INC HL
+		DJNZ FATBOOT2
+		LD A,C
+		EXX
+		DEC A
+		JR Z,SEL_FAT
+		CALL WINW			;‚›‚…‹ˆ ‘”ŽŒˆŽ‚€Ž… ŽŠŽ
+		JP _RULILKA			;‚Ž‡‚€™€…Œ‘Ÿ Š Ž™…Œ“ “€‚‹…ˆž
+
+;……Š‹ž—…ˆ… € “‘’Ž‰‘’‚€ ˆ ‚›‚Ž„ €‰„…ŽƒŽ € …Œ
+SEL_FAT		LD A,(IX+0X12)			;‚‡Ÿ‹ˆ ŽŒ… ‚›€ŽƒŽ “‘’Ž‰‘’‚€
+		CALL COM_DEV
+		DB Set_vol			;‚›€‹ˆ “‘’Ž‰‘’‚Ž Ž ŽŒ…“
+		CALL COM_FAT
+		DB Wc_fat			;ˆˆ–ˆ€‹ˆ‡€–ˆŸ ”€’ „€‰‚…€ „‹Ÿ ‚›€ŽƒŽ “‘’Ž‰‘’‚€
+		LD DE,ADR_CAT
+		CALL COM_FAT
+		DB Fhobeta			;Žˆ‘Š •Ž…’€ ”€‰‹Ž‚ "$C " C Ž‚…Š€Œˆ
+		LD HL,1
+		AND A
+		SBC HL,BC			;€‰„…Ž —’Ž-’Ž Ž„Ž?
+		JR NZ,SEL_FAT1			;…‘‹ˆ … €‚Ž 1, ’Ž Ž„Ž‹†€…Œ
+		PUSH BC				;‘Ž•€ˆ‹ˆ ŠŽ‹ˆ—…‘’‚Ž €‰„…ŽƒŽ
+		LD BC,(ADR_CAT)			;‚‡Ÿ‹ˆ ŽŒ… €‰„…ŽƒŽ
+		CALL COM_FAT
+		DB Getfzap			;Ž‹“—ˆ‹ˆ Žˆ‘€’…‹œ
+		POP BC				;‚…“‹ˆ ŠŽ‹ˆ—…‘’‚Ž €‰„…ŽƒŽ
+		LD DE,0X0B
+		ADD HL,DE
+		LD A,(HL)			;‚‡Ÿ‹ˆ ”‹€ƒŽ‚›‰ €‰’ ’ŽƒŽ —’Ž €˜‹ˆ
+		AND 0X10
+		LD HL,0				;…‘‹ˆ ‡€“‘Š€…Œ, ’Ž ŽŒ… 0 ˆ‡ €‰„…ŽƒŽ
+		JR Z,RUN_HOB1			;…‘‹ˆ ’Ž ”€‰‹ ‘€‡“ ‡€“‘Š€…Œ
+SEL_FAT1	LD IX,FAT_FILES			;…‘‹ˆ „ˆ€, ’Ž ‚›‚Ž„ˆŒ ‚ ŽŠŽ
+		JP OUT_HOB
+
+;‡€“‘Š ‚›€ŽƒŽ ŠŽ„Ž‚ŽƒŽ ”€‰‹€ ˆ‡ HOBETA ”€‰‹€
+RUN_HOB		DI
+		CALL SHUT2AY			;“ŒŠ€‹Š€ ‚ AY
+		LD L,(IX+0X12)
+		LD H,(IX+0X13)
+RUN_HOB1	LD DE,ADR_CAT
+		ADD HL,HL
+		ADD HL,DE			;Ž’Š“„€ ˆŒŸ ”€‰‹€ ‚‡Ÿ’œ
+		LD C,(HL)
+		INC HL
+		LD B,(HL)			;Ž‹“—ˆ‹ˆ ’…Š“™ˆ‰ ‚›€›‰ ŽŒ…
+		LD A,6
+		CALL COM_FAT
+		DB Positf			;“‘’€Ž‚Š€ ‚“’……ƒŽ “Š€‡€’…‹Ÿ FAT „€‰‚…€
+		CALL COM_FAT
+		DB Getfzap			;Ž‹“—ˆ‹ˆ Žˆ‘€’…‹œ Ž “‘’€Ž‚‹…ŽŒ“ ŽŒ…“
+		LD DE,0X0B			;“†… €‰’ Ž ‘Œ…™…ˆž
+		ADD HL,DE
+		LD A,(HL)			;ˆ‡ ’ŽƒŽ €‰’€ “†… Ž„ˆ ˆ’
+		SBC HL,DE
+		AND 0X10			;Ž‚…ˆ‹ˆ
+		JR Z,GO_RUN_HOB			;…‘‹ˆ =0, ’Ž ‡€“‘Š€…Œ ŠŽ„Ž‚›‰ ‹ŽŠ
+		PUSH BC				;‘Ž•€ˆ‹ˆ ŽŒ…
+		CALL COM_FAT
+		DB Ent_dir			;‚Ž‰’ˆ/‚›‰’ˆ ‚/ˆ‡ „ˆ…Š’Žˆ‰
+		POP BC				;‚Ž‘‘’€Ž‚ˆ‹ˆ ’…Š“™ˆ‰ ŽŒ…
+		LD A,D				;“„…Œ Ž‚…Ÿ’œ …‚›‰ ‘ˆŒ‚Ž‹ ˆŒ…ˆ …„›„“™…ƒŽ Žˆ‘€’…‹Ÿ
+		LD HL,0				;€„…‘ ‘’…Š€ ŽŠŽ›• ‘Ž•€…ˆ‰ „‹Ÿ •Ž†„…ˆŸ Ž „ˆ€Œ
+DIR_LEVEL	EQU $-2
+		CP "."				;…‘‹ˆ ŽŽ …‘’œ ‚ ˆŒ…ˆ, ’Ž 
+		JR NZ,SNYT0			;‘Ž•€Ÿ…Œ ’…Š“™ˆ… ‡€—…ˆŸ ŽŠŽ˜Š€ ˆ ‚•Ž„ˆŒ ‚ „ˆ“
+		INC HL				;ˆ€—… ‚Ž‡‚€™€…Œ‘Ÿ ‚ …„›„“™“ž
+		LD A,(HL)
+		INC HL
+		LD E,(HL)
+		INC HL
+		LD D,(HL)
+		LD (DIR_LEVEL),HL		;‘Ž•€ˆ‹ˆ ˆ‡Œ…ˆ‚˜ˆ‰‘Ÿ €„…‘ ‘’…Š€
+		LD (IX+0X12),E
+		LD (IX+0X13),D
+		LD (IX+0X0F),A
+		LD DE,ADR_CAT
+		CALL COM_FAT
+		DB Fhobeta			;Žˆ‘Š •Ž…’€ ”€‰‹Ž‚ "$C " C Ž‚…Š€Œˆ
+		LD (IX+0X10),C
+		LD (IX+0X11),B
+		JP REOUT_HOB
+
+SNYT0		LD D,(IX+0X13)
+		LD E,(IX+0X12)
+		LD A,(IX+0X0F)
+		LD (HL),D
+		DEC HL
+		LD (HL),E
+		DEC HL
+		LD (HL),A
+		DEC HL
+		LD (DIR_LEVEL),HL		;‘Ž•€ˆ‹ˆ ˆ‡Œ…ˆ‚˜ˆ‰‘Ÿ €„…‘ ‘’…Š€
+		LD DE,ADR_CAT
+		CALL COM_FAT
+		DB Fhobeta			;Žˆ‘Š •Ž…’€ ”€‰‹Ž‚ "$C " C Ž‚…Š€Œˆ
+		JP OUT_HOB
+
+GO_RUN_HOB	LD DE,0X14			;……•Ž„ˆŒ Š ‘Œ…™…ˆž ‚ Žˆ‘€’…‹… „‹Ÿ Ž‹“—…ˆŸ
+		ADD HL,DE			;‘’€˜ˆ• 16 ˆ’ ŽŒ…€ Š‹€‘’…€ €—€‹€ ”€‰‹€ „‹Ÿ ‡€“‘Š€
+		LD C,(HL)
+		INC HL
+		LD B,(HL)			;‡€€‹ˆ ‘’€˜ˆ… 16 ˆ’ ŽŒ…€ Š‹€‘’…€
+		LD E,5				;’……œ ˆ„…Œ ‡€ Œ‹€„˜ˆŒˆ 16 ˆ’€Œˆ ŽŒ…€ Š‹€‘’…€
+		ADD HL,DE
+		LD E,(HL)
+		INC HL
+		LD D,(HL)			;’……œ BCDE=Ž‹›‰ 32-• ˆ’›‰ ŽŒ… Š‹€‘’…€
+		LD (AFILCLS),DE
+		LD (AFILCLS+2),BC		;………‘‹ˆ ‚ ……Œ…›… ”€’ „€‰‚…€
+		CALL COM_DEV
+		DB Kol_vol			;‡€Ž‘ “ Œ……„†…€ “‘’Ž‰‘’‚ Ž ’…Š“™…Œ “‘’Ž‰‘’‚…
+		LD A,D				;‚‡Ÿ‹ˆ ŽŒ… ’…Š“™…ƒŽ “‘’Ž‰‘’‚€
+		ADD A,A
+		ADD A,A
+		ADD A,A
+		LD C,A
+		LD B,0
+		ADD HL,BC
+		LD A,(HL)			;‚‡Ÿ‹ˆ ’ˆ €‡„…‹€
+		SUB 4				;Ž“‘Š€…Œ „ˆ‘ŠŽ‚Ž„›
+		EX AF,AF'			;ŽŒ… ’…Š“™…ƒŽ “‘’Ž‰‘’‚€ ‚ "A"
+		INC HL
+		LD A,(HL)			;‚‡Ÿ‹ˆ Œ…‘’ŽŽ‹Ž†…ˆ… Ž‘ˆ’…‹Ÿ (MASTER/SLAVE)
+		EX AF,AF'
+		LD HL,0X5800
+		LD DE,0X5801
+		LD BC,0X02FF
+		LD (HL),L
+		LDIR				;‡€—…ˆ‹ˆ Š€ „‹Ÿ Œ€‘ŠˆŽ‚Šˆ ‡€“‘Š€‹Šˆ
+		LD HL,ERORDRV
+		LD DE,0X4200
+		LD B,1
+		LDIR				;……Ž‘ ……Œ…›• ”€’€ „‹Ÿ MICROBOOT
+		PUSH DE				;‘ž„€ ……Ž‘ ŠŽ„€ ˆ ‡€“‘Š
+		LD HL,MICROBOOT
+		LD BC,END_MICROBOOT-MICROBOOT
+		LDIR				;………‘‹ˆ ‡€“‘Š€‹Š“
+		PUSH AF
+		CALL MEMSET			;‚›‘’€‚ˆ‹ˆ …†ˆŒ ŠŽŒ€
+		POP AF
+		RET				;‡€“‘Š ‡€“‘Š€‹Šˆ :)

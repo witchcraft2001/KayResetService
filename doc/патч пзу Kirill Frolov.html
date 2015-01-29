@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0039)http://code-zx1.zxnet-archive.ru/id/345 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>«патч пзу, попытка номер 2» (Kirill Frolov → All; 04 Apr 2002, 22:10:48)</title>
+        
+        <meta name="author" content="Arhey^AZ">
+        <meta name="copyright" content="© ZXNET-ARCHIVE.RU">
+        <meta name="description" content="Архив FTN-сети ZxNet, эхоконференция CODE.ZX, том 2. Тематика: обсуждение программирования на ZX-Spectrum.">
+        <meta name="keywords" content="zxnet, zx-spectrum, speccy, ftn, CODE.ZX, assembler, basic, программирование, кодинг">
+        <meta name="google-site-verification" content="42OvV6QNy3rut0-K0dzSb0974oVlyaX3Fr_-HTJnHIs">
+        <link href="./патч пзу Kirill Frolov_files/design.css" rel="stylesheet" type="text/css">
+                                <meta name="yandex-verification" content="5870a994dc066c9d">
+                    <style type="text/css">.yandexform{display:none}</style><style type="text/css">.yaform,.yaform .yaform__form,.yaform .yaform__input,.yaform .yaform__input-text,.yaform .yaform__submit,.yaform .yaform__search-precise{font-size:12px!important;color:#000!important}.yaform .yaform__form{display:block}.yaform,.yaform .yaform__form,.yaform .yaform__input,.yaform .yaform__search-precise,.yaform .yaform__search-precise__radio,.yaform .yaform__gap,.yaform .yaform__gap-i{margin:0;padding:0}.yaform-holster{margin:0!important;padding:0!important}.yaform .yaform__gap-i{width:9em}.yaform .yaform__logo{width:52px;margin:0;padding:0 6px 0 0;text-decoration:none}.yaform .yaform__logo-img{width:52px;height:21px;margin:0;padding:0;border:0!important}.yaform .yaform__search{font-size:12px!important;width:100%}.yaform .yaform__search-input,.yaform .yaform__search-precise,.yaform .yaform__gap{border:0}.yaform .yaform__search-image{padding:0}.yaform .yaform__search-input{padding:6px}.yaform .yaform__search-input-layout,.yaform .yaform__search-input-layout-l,.yaform .yaform__search-input-layout-r{font-size:12px!important;padding:0;vertical-align:middle;border:0;border-collapse:collapse}.yaform .yaform__search-input-layout,.yaform .yaform__search-input-layout-l{width:100%}.yaform .yaform__search-precise{font-size:12px!important;padding:0 18px 5px 6px;text-align:left;vertical-align:top;color:#000}.yaform .yaform__search-precise-i{white-space:nowrap}.yaform .yaform__search-precise__radio{width:auto;margin:0 .3em 0 0;vertical-align:middle;background:none}.yaform .yaform__search-precise__label{margin:0 .4em 0 0;padding:0;vertical-align:middle}body .yaform .yaform__input-text{width:100%;margin:0!important;cursor:text;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background-color:#fff;border:1px solid #7f9db9}.yaform .yaform__submit{display:block;width:auto;margin:0 0 0 5px}.yaform_arr{background-repeat:no-repeat;background-position:100% 50%}.yaform_arr .yaform__form{padding-right:24px}.yaform_arr .yaform__search-input{padding-right:3px}.yaform_default{position:relative;margin:0 0 0 65px!important;padding:0!important}.yaform_default .yaform__logo{position:absolute;top:4px;left:-60px}.yaform_simple{margin:0!important;padding:0!important}.yaform_simple .yaform__logo{display:block;margin:6px 0 0 6px}.yaform_hint{margin:0!important;padding:0!important}.yaform_hint .yaform__input-text_hint{background-repeat:no-repeat;background-position:.2em 50%}.yaform .yaform__submit_image{width:19px;height:15px;outline:none;cursor:pointer;border:0}.yaform .b-suggest{position:relative;margin:0;padding:0}.yaform .b-suggest-holster{position:absolute;width:100%;height:20em;margin:0;padding:0}.yaform .b-suggest-popup{margin:0;padding:0}.yaform .b-suggest-list{position:absolute;z-index:9999;overflow:hidden;min-width:10em;max-width:100%;margin:-1px 0 0 0;padding:0;list-style:none;background:#fff;border:1px solid #999;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}.yaform .b-suggest-list{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}.yaform .b-suggest-list iframe{position:absolute;z-index:-1;width:100%;height:100%;background:#fff}.yaform .b-suggest-items{min-width:10em;margin:0;padding:0;list-style:none;background:#fff}.yaform .b-suggest-elem{display:block;margin:0;padding:.2em .5em;cursor:pointer;text-decoration:none;background:url()}html body .yaform .b-suggest-elem,html body .yaform .b-suggest-elem:link{color:#000!important}.yaform .b-suggest-elem:hover,html body .yaform .b-suggest-elem_state_hover{color:#f00!important;text-decoration:underline}.yaform .b-suggest-elem_nav:hover{color:#000;text-decoration:none}.yaform .b-suggest-elem_nav .link{color:#1a3dc1;text-decoration:underline}.yaform .b-suggest-elem_nav:hover .link{color:#f00}.yaform .b-suggest-elem_nav .info{color:#666;white-space:nowrap}.yaform .b-suggest-elem_num,.yaform .b-suggest-elem_num:hover{font-family:"Courier New",monospace;font-weight:bold;color:#060!important;text-decoration:none}.yaform .b-suggest-elem_num .info{border-bottom:1px dotted}.yaform .b-suggest-elem_selected{background:#fdedaf}.yaform .b-suggest-close{font:85% Verdana,sans-serif;margin:0;padding:0 .5em;text-align:right;line-height:1.5em;color:#fff;background:#999}#yandexform0 .yaform__submit_image{background:url(http://site.yandex.net/i/form/search.png) no-repeat}#yandexform0 .yaform__input-text_hint{background-image:url(http://site.yandex.net/i/form/yandex-hint.png)}#yandexform0 .yaform__form * { font-size:10px !important }#yandexform0 .yaform__search, #yandexform0 .yaform__search td, #yandexform0 .yaform__precise-i { background-color: #303030 !important }#yandexform0 .yaform__search-precise__label { color:#CCCCCC !important }#yandexform0 { background-image: url(http://site.yandex.ru/arrow.xml?color=%23303030); }</style><style type="text/css">.yaform,.yaform .yaform__form,.yaform .yaform__input,.yaform .yaform__input-text,.yaform .yaform__submit,.yaform .yaform__search-precise{font-size:12px!important;color:#000!important}.yaform .yaform__form{display:block}.yaform,.yaform .yaform__form,.yaform .yaform__input,.yaform .yaform__search-precise,.yaform .yaform__search-precise__radio,.yaform .yaform__gap,.yaform .yaform__gap-i{margin:0;padding:0}.yaform-holster{margin:0!important;padding:0!important}.yaform .yaform__gap-i{width:9em}.yaform .yaform__logo{width:52px;margin:0;padding:0 6px 0 0;text-decoration:none}.yaform .yaform__logo-img{width:52px;height:21px;margin:0;padding:0;border:0!important}.yaform .yaform__search{font-size:12px!important;width:100%}.yaform .yaform__search-input,.yaform .yaform__search-precise,.yaform .yaform__gap{border:0}.yaform .yaform__search-image{padding:0}.yaform .yaform__search-input{padding:6px}.yaform .yaform__search-input-layout,.yaform .yaform__search-input-layout-l,.yaform .yaform__search-input-layout-r{font-size:12px!important;padding:0;vertical-align:middle;border:0;border-collapse:collapse}.yaform .yaform__search-input-layout,.yaform .yaform__search-input-layout-l{width:100%}.yaform .yaform__search-precise{font-size:12px!important;padding:0 18px 5px 6px;text-align:left;vertical-align:top;color:#000}.yaform .yaform__search-precise-i{white-space:nowrap}.yaform .yaform__search-precise__radio{width:auto;margin:0 .3em 0 0;vertical-align:middle;background:none}.yaform .yaform__search-precise__label{margin:0 .4em 0 0;padding:0;vertical-align:middle}body .yaform .yaform__input-text{width:100%;margin:0!important;cursor:text;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background-color:#fff;border:1px solid #7f9db9}.yaform .yaform__submit{display:block;width:auto;margin:0 0 0 5px}.yaform_arr{background-repeat:no-repeat;background-position:100% 50%}.yaform_arr .yaform__form{padding-right:24px}.yaform_arr .yaform__search-input{padding-right:3px}.yaform_default{position:relative;margin:0 0 0 65px!important;padding:0!important}.yaform_default .yaform__logo{position:absolute;top:4px;left:-60px}.yaform_simple{margin:0!important;padding:0!important}.yaform_simple .yaform__logo{display:block;margin:6px 0 0 6px}.yaform_hint{margin:0!important;padding:0!important}.yaform_hint .yaform__input-text_hint{background-repeat:no-repeat;background-position:.2em 50%}.yaform .yaform__submit_image{width:19px;height:15px;outline:none;cursor:pointer;border:0}.yaform .b-suggest{position:relative;margin:0;padding:0}.yaform .b-suggest-holster{position:absolute;width:100%;height:20em;margin:0;padding:0}.yaform .b-suggest-popup{margin:0;padding:0}.yaform .b-suggest-list{position:absolute;z-index:9999;overflow:hidden;min-width:10em;max-width:100%;margin:-1px 0 0 0;padding:0;list-style:none;background:#fff;border:1px solid #999;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px}.yaform .b-suggest-list{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}.yaform .b-suggest-list iframe{position:absolute;z-index:-1;width:100%;height:100%;background:#fff}.yaform .b-suggest-items{min-width:10em;margin:0;padding:0;list-style:none;background:#fff}.yaform .b-suggest-elem{display:block;margin:0;padding:.2em .5em;cursor:pointer;text-decoration:none;background:url()}html body .yaform .b-suggest-elem,html body .yaform .b-suggest-elem:link{color:#000!important}.yaform .b-suggest-elem:hover,html body .yaform .b-suggest-elem_state_hover{color:#f00!important;text-decoration:underline}.yaform .b-suggest-elem_nav:hover{color:#000;text-decoration:none}.yaform .b-suggest-elem_nav .link{color:#1a3dc1;text-decoration:underline}.yaform .b-suggest-elem_nav:hover .link{color:#f00}.yaform .b-suggest-elem_nav .info{color:#666;white-space:nowrap}.yaform .b-suggest-elem_num,.yaform .b-suggest-elem_num:hover{font-family:"Courier New",monospace;font-weight:bold;color:#060!important;text-decoration:none}.yaform .b-suggest-elem_num .info{border-bottom:1px dotted}.yaform .b-suggest-elem_selected{background:#fdedaf}.yaform .b-suggest-close{font:85% Verdana,sans-serif;margin:0;padding:0 .5em;text-align:right;line-height:1.5em;color:#fff;background:#999}#yandexform1 .yaform__submit_image{background:url(http://site.yandex.net/i/form/search.png) no-repeat}#yandexform1 .yaform__input-text_hint{background-image:url(http://site.yandex.net/i/form/yandex-hint.png)}#yandexform1 .yaform__form * { font-size:10px !important }#yandexform1 .yaform__search, #yandexform1 .yaform__search td, #yandexform1 .yaform__precise-i { background-color: #303030 !important }#yandexform1 .yaform__search-precise__label { color:#CCCCCC !important }#yandexform1 { background-image: url(http://site.yandex.ru/arrow.xml?color=%23303030); }</style></head>
+    <body>
+        <table class="maintab" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                <td class="header">
+                    <div class="shapka">
+                        <h1>Эхоконференция CODE.ZX</h1>
+                                                    Сообщение 1348 из 4682 (кодинг на ZX-Spectrum)                                            </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="main">
+                    <table class="work" cellspacing="0" cellpadding="0">
+                                                                            <tbody><tr>
+                                <td class="nav">
+                                                <div class="msg_nav">
+                <span class="left">
+                                                                                                    <a href="http://code-zx1.zxnet-archive.ru/id/344">[←] предыдущее сообщение</a>
+                                                                                        </span>
+                <span class="center">
+                    <noindex><a rel="nofollow" href="http://zxnet-archive.ru/">[/] к списку эх</a></noindex>
+                </span>
+                <span class="center">
+                                        <a href="http://code-zx1.zxnet-archive.ru/page/6">[↑] вверх на уровень</a>
+                                    </span>
+                <span class="center">
+                    <div class="yaform-holster"><div class="yandexform yaform yaform_hint yaform_arr" onclick="return {type: 2, logo: &#39;rb&#39;, arrow: true, webopt: false, websearch: false, bg: &#39;#303030&#39;, fg: &#39;#CCCCCC&#39;, fontsize: 10, suggest: true, site_suggest: true, encoding: &#39;utf-8&#39;, language: &#39;ru&#39;}" id="yandexform0" style="display: block;"><form class="yaform__form" method="get" action="http://yandex.ru/sitesearch"><table class="yaform__search" cellpadding="0" cellspacing="0"><tbody><tr><td class="yaform__search-input"><table class="yaform__search-input-layout"><tbody><tr><td class="yaform__search-input-layout-l"><div class="yaform__input"><input name="text" value="" class="yaform__input-text yaform__input-text_hint" autocomplete="off"><div class="b-suggest" onclick="return {url: &#39;http://sitesuggest.yandex.ru/suggest-ya.cgi?v=2&amp;callback=?&#39;, adjust: &#39;true&#39;}"><div class="b-suggest-holster" style="display: none;"><div class="b-suggest-popup"><div class="b-suggest-list"><iframe frameborder="0" src="javascript:'<body style=\'background:none;overflow:hidden\'>'"></iframe><ul class="b-suggest-items"></ul></div></div></div></div></div></td><td class="yaform__search-input-layout-r"><input type="hidden" name="searchid" value="1809025"><input type="hidden" name="reqenc" value="utf-8"><input type="hidden" name="l10n" value="ru"><input type="hidden" name="web" value="0"><input class="yaform__submit" type="submit" value="Найти"></td></tr></tbody></table></td></tr><tr><td class="yaform__gap"><div class="yaform__gap-i"></div></td></tr></tbody></table></form></div></div><script type="text/javascript" src="./патч пзу Kirill Frolov_files/form.js" charset="utf-8"></script>                </span>
+                <span class="right">
+                                        
+                                                                                <a href="http://code-zx1.zxnet-archive.ru/id/346">следующее сообщение [→]</a>
+                                                                                        </span>
+            </div>
+                                        </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="msg_header">
+                                        <span>Num: </span>1348<br>
+                                        <span>From: </span><span class="fromname">Kirill Frolov</span> <span>(500:812/1.507)</span> <span>04 Apr 2002, 22:10:48</span><br>
+                                        <span>To: </span><span class="toname">All</span><br>
+                                        <span>Subj: </span><strong>патч пзу, попытка номер 2</strong>
+                                    </div>
+                                    <table class="msg_view" cellspacing="0" cellpadding="0">
+                                        <tbody><tr>
+                                            <td class="left">
+                                                <pre>Hемедленно нажми на RESET, All!
+
+    В первом варианте был страшный глюк.
+
+=== Cut ===
+; (L) Copyleft Kirill Frolov 04-04-2002
+;
+; Патч к Basic-128.
+; Патч накладывается посредством ALASM
+; ассемблера. Патч совершает следующие
+; изменения в прошивке бейсика:
+;
+;  1. Исключается из меню
+;    пункт "Tape Loader".
+;  2. Пункт "TR-Dos" ставится первым
+;    в меню (вместо "Tape Loader").
+;  3. Последний пункт "TR-DOS" замещен
+;    пунктом "Reset" для выполнения
+;    программы "холодного сброса".
+;  4. Если в момент сброса удерживается
+;    клавиша Caps Shift то происходит
+;    выход в меню без осуществления
+;    "холодного сброса".
+;  5. При удержании клавиши Symbol Shift
+;    происходит запуск Basic-128
+;    (программа в теневом банке ПЗУ
+;    не будет запущена).
+;  6. Если вышеозначенные клавиши не
+;    удерживаются, то проверяется
+;    содержимое ОЗУ по адресам
+;    #5c00..#5c0f. Если проверяемые
+;    ячейки заполнены одним значением
+;    то предполагается, что произошло
+;    включение компьютера и происходит
+;    выполнение программы "холодного
+;    сброса", иначе происходит выход
+;    в меню.
+;
+; Примечания:
+;    Для вызова теста изображения из
+; Basic-128 необходимо при сбросе
+; удерживать одновременно 3 клавиши:
+; Caps Shift, Symbol Shift и Space
+; (или Symbol Shift и Break).
+;    При одновременном удержании
+; Caps Shift и Symbol Shift
+; (или одной клавиши Ext Mode)
+; произойдет выход в меню Basic-128.
+;    Под выходом в меню подразумевается
+; запуск программы из банка "теневого
+; пзу" на компьютерах типа Scorpion и
+; Kay или выход в меню Basic-128
+; на компьютере типа Pentagon (при
+; необходимости программа может быть
+; модернизирована для запуска программ
+; из дополнительного банка ПЗУ на
+; компьютере Pentagon). В дополнительном
+; банке ПЗУ могут находится коммандеры
+; (boot) TR-DOS (например
+; Quick Commander) или прошивки типа
+; MadROM.
+;    Под "холодным сбросом"
+; подразумевается запуск программы
+; из банка ПЗУ TR-DOS для загрузки
+; boot файла (при необходимости возможна
+; модернизация программы для запуска
+; iS-DOS с винчестера).
+;
+;    Для правильной работы патча
+; необходимо установить тип компьютера
+; Pentagon или Scorpion/Kay.
+;
+;    "Патчить" следует прошивку пзу
+; Basic-128 от компьютера Pentagon.
+;
+; ВИМАИЕ!  Программа не предназначена
+; для исправления ПЗУ компьютера
+; Scorpion работающего с теневым
+; монитором. Изменять содержимое ПЗУ
+; Basic-128 в компьютере Scorpion
+; ЕЛЬЗЯ при наличии теневого монитора.
+; Если вам хочется использовать этот
+; патч то придется отказаться от
+; использования теневого монирора и
+; заменить содержимое Basic-48,
+; Basic-128 и TR-DOS стандартными
+; прошивками (например от компьютеров
+; Pentagon или Kay).
+;
+; а различных версиях компьютера Kay
+; программа не была протестирована и
+; возможно работать не будет.
+;
+
+; Установка типа машины
+                        ; PENTAGON = 0
+MACHINE EQU 1            ; SCORPION &amp; KAY = 1
+
+;-----------------------------------------------------
+
+LOAD    EQU #C000
+
+JMP128  EQU #0009
+TEST128 EQU #00C7
+
+TTSBEG EQU #3C20 ; TAPE-TESTER  #43 BYTES
+TTSEND EQU #3C63
+RSRBEG EQU #06E8 ; RS232 RECEIVER  #E2 BYTES
+RSREND EQU #07CA
+RSSBEG EQU #11A3 ; RS232 TRANSMITTER  #48 BYTES
+RSSEND EQU #11EB
+
+TEMPSTK EQU #5C08
+TEMPPRG EQU #5D3B
+
+        ORG LOAD
+        DISP 0
+
+;  загрузка стандартной ПЕТАГООВСКОЙ прошивки Basic-128
+        INCBIN "rom128"
+
+
+;---------------------------------------------------
+        ORG LOAD+JMP128
+        DISP JMP128
+        JP TEST
+
+;---------------------------------------------------
+        ORG LOAD+RSRBEG
+        DISP RSRBEG
+        XOR A
+        RET      ; NO RS232
+
+
+TEST
+        LD SP,TEMPSTK
+
+        LD HL,#5C00
+        LD BC,#10
+        LD A,(HL)
+CPL1    CPI
+        JP NZ,BRESET
+        JP PE,CPL1
+
+        LD A,#FE
+        IN A,(#FE)      ; CAPS SHIFT
+        RRA
+        JP NC,BRESET
+        JP POWERUP
+
+PRESET  DI
+        LD SP,TEMPSTK
+POWERUP LD HL,R_PUP
+        JR RJP
+
+BRESET  LD A,#7F
+        IN A,(#FE)      ; SYMBOL SHIFT
+        AND #02
+        JP Z,TEST128
+
+        LD HL,R_RES
+
+RJP
+        LD DE,TEMPPRG
+        LD BC,#0080       ; FIXME size
+        LDIR
+        LD BC,#7FFD
+        JP TEMPPRG
+
+  ; DISP TEMPPRG
+
+R_PUP   LD HL,0
+        PUSH HL
+        LD A,#10
+        OUT (C),A
+        JP #3D2F
+
+
+R_RES   IFN MACHINE
+        LD HL,#0A00
+        OUT (C),L
+        LD B,#1F
+        OUT (C),H
+        RST #00
+        ELSE
+        JP TEST128
+        ENDIF
+
+        ; ENT
+        ; DISP $-LOAD
+
+;---------------------------------------------------
+        ORG LOAD+RSSBEG
+        DISP RSSBEG
+        RET
+
+
+;-----------------------------------------------------
+        ORG LOAD+#275E
+        DB "TR-Dos "
+        DW #2020,#A020
+        ORG LOAD+#2784
+        DB "Reset"
+        DW #2020,#2020
+        DW #A020
+        ORG LOAD+#2744+2
+        DW #2816
+        ORG LOAD+#2744+14
+        DW PRESET
+
+
+;-----------------------------------------------------
+        ORG LOAD+TTSBEG
+        DISP TTSBEG
+
+
+;-----------------------------------------------------
+
+        ENT
+
+=== Cut ===
+
+
+<span class="tearline">--- [ZX]</span>
+<span class="origin"> * Origin: Registered Linux User #204355 (500:812/1.507)</span>
+
+</pre>
+                                            </td>
+                                            <td class="right" valign="bottom">
+                                                <div class="lnk">
+                                                                                                    </div>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nav">
+                                                <div class="msg_nav">
+                <span class="left">
+                                                                                                    <a href="http://code-zx1.zxnet-archive.ru/id/344">[←] предыдущее сообщение</a>
+                                                                                        </span>
+                <span class="center">
+                    <noindex><a rel="nofollow" href="http://zxnet-archive.ru/">[/] к списку эх</a></noindex>
+                </span>
+                <span class="center">
+                                        <a href="http://code-zx1.zxnet-archive.ru/page/6">[↑] вверх на уровень</a>
+                                    </span>
+                <span class="center">
+                    <div class="yaform-holster"><div class="yandexform yaform yaform_hint yaform_arr" onclick="return {type: 2, logo: &#39;rb&#39;, arrow: true, webopt: false, websearch: false, bg: &#39;#303030&#39;, fg: &#39;#CCCCCC&#39;, fontsize: 10, suggest: true, site_suggest: true, encoding: &#39;utf-8&#39;, language: &#39;ru&#39;}" id="yandexform1" style="display: block;"><form class="yaform__form" method="get" action="http://yandex.ru/sitesearch"><table class="yaform__search" cellpadding="0" cellspacing="0"><tbody><tr><td class="yaform__search-input"><table class="yaform__search-input-layout"><tbody><tr><td class="yaform__search-input-layout-l"><div class="yaform__input"><input name="text" value="" class="yaform__input-text yaform__input-text_hint" autocomplete="off"><div class="b-suggest" onclick="return {url: &#39;http://sitesuggest.yandex.ru/suggest-ya.cgi?v=2&amp;callback=?&#39;, adjust: &#39;true&#39;}"><div class="b-suggest-holster" style="display: none;"><div class="b-suggest-popup"><div class="b-suggest-list"><iframe frameborder="0" src="javascript:'<body style=\'background:none;overflow:hidden\'>'"></iframe><ul class="b-suggest-items"></ul></div></div></div></div></div></td><td class="yaform__search-input-layout-r"><input type="hidden" name="searchid" value="1809025"><input type="hidden" name="reqenc" value="utf-8"><input type="hidden" name="l10n" value="ru"><input type="hidden" name="web" value="0"><input class="yaform__submit" type="submit" value="Найти"></td></tr></tbody></table></td></tr><tr><td class="yaform__gap"><div class="yaform__gap-i"></div></td></tr></tbody></table></form></div></div><script type="text/javascript" src="./патч пзу Kirill Frolov_files/form.js" charset="utf-8"></script>                </span>
+                <span class="right">
+                                        
+                                                                                <a href="http://code-zx1.zxnet-archive.ru/id/346">следующее сообщение [→]</a>
+                                                                                        </span>
+            </div>
+                                                                    </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+            <tr>
+                <td class="podval">
+                    <table cellspacing="0" cellpadding="0" width="100%">
+                        <tbody><tr>
+                            <td align="left">
+                                © 2011 ZXNET-ARCHIVE.RU                            </td>
+                            <td align="center" class="lnk">
+                                                            </td>
+                                                    </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+        </tbody></table>
+            
+</body></html>

@@ -1,0 +1,12 @@
+	DEVICE ZXSPECTRUM48
+
+	ORG #0000
+LOAD	incbin "sos128_v2_1_las.bin"
+
+	ORG LOAD+#2764
+	DB "Service"
+        DW #2020,#A020
+        ORG LOAD+#2749
+        DW #04c6
+        
+       	SAVEBIN "sos128_las.rom",0,#4000

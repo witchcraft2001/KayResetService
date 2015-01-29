@@ -1,0 +1,190 @@
+
+DD		EQU 12				;„€’€
+MM		EQU 10				;Œ…‘Ÿ–
+YY		EQU 10				;ƒŽ„
+DATA		EQU DD+(MM<<5)+(YY<<9)+0X8000	;“†… “€ŠŽ‚€Ž
+
+DEPKADR		EQU 0X6000
+
+SYSREG_EFF7	EQU 0XEFF7
+SET_ADR_CMOS	EQU 0XDFF7
+RD_WR_CMOS	EQU 0XBFF7
+CMOS_ON		EQU 0X80
+CMOS_OFF	EQU 0
+
+		ORG 0X0000
+
+		DI
+		LD SP,DEPKADR
+		LD IY,0X5C3A
+		LD A,0X3F
+		LD I,A
+		IM 1
+		xor a
+		OUT (0XFE),A
+;		LD A,8
+;		LD BC,0X1FFD		;Ž“‹Ÿ…Œ „Ž.Ž’ ŠŽ”ˆƒ“€–ˆˆ Š€‰, „‹Ÿ ‘Ÿ’ˆŸ ‚‘…• ‹ŽŠˆŽ‚ŽŠ ˆ ‚Š‹ž—…ˆŸ ’“›
+;		OUT (C),A
+
+;¯à®¢¥àª  ­ ¦ â¨ï ¤¢ãå ª« ¢¨è (¯®àâ¨¬ â®«ìª® AF,BC)
+RSTKEYS		LD BC,0XFEFF
+RSTKEYS1	LD A,B
+		IN A,(0XFE)
+		REPT 5
+		RRA
+		JR C,$+3
+		INC C
+		ENDM
+		RLC B
+		JR C,RSTKEYS1
+		DEC C
+		JP P,GTSTKEY		;€†€’Ž Ž‹…… 1 ŠŽŠˆ, ……•Ž„ˆŒ Š ’…‘’“ Š‹€‚ˆ€’“›
+		LD DE,0			;1 €†€’€, Ž‚…Ÿ…Œ —’Ž ’Ž
+		LD BC,0X7FFD
+		PUSH DE
+;		LD A,0XFE
+;		IN A,(0XFE)		;—’…ˆ… €†€’Ž‘’ˆ ŠŽŠˆ "CS"
+;		RRA
+;		LD A,0
+;		JP NC,START_SELECT	;ˆ €†€’Ž‰ "CS" ……•Ž„ˆŒ ‚ …‰‘ˆŠ 128
+		LD A,0X7F
+		IN A,(0XFE)		;—’…ˆ… €†€’Ž‘’ˆ ŠŽŠˆ "SS"
+		LD D,A
+		RRA
+		RRA
+		LD A,0X10
+		JP NC,START_SELECT	;ˆ €†€’Ž‰ "CS" ……•Ž„ˆŒ ‚ …‰‘ˆŠ 48
+		LD A,D
+		RRA			;Ž‚…Š€ €†€’Ž‘’ˆ ŠŽŠˆ "SPACE"
+		JR C,CMPCFG1		;……•Ž„ˆŒ „€‹…… …‘‹ˆ ˆ—…ƒŽ … €†€’Ž
+		LD A,0X10
+		LD DE,0X3D2F
+		PUSH DE
+		JP START_SELECT		;ˆ €†€’Ž‰ "SPACE" ……•Ž„ˆŒ ‚ TR-DOS
+
+CMPCFG1		LD A,0XFD
+		IN A,(0XFE)
+		AND 4			;‡€“‘Š „…ŒŠˆ
+		JP Z,GDEMO
+		LD HL,DEPKADR
+		LD SP,HL
+		EX DE,HL
+		LD HL,LOADADR		;€‘€ŠŽ‚Š€ … ƒ‹žŠ€
+		CALL DEC40
+		LD HL,CHARS
+		LD DE,0X0F800
+		CALL DEC40
+		XOR A
+		IN A,(0XFE)
+		CPL
+		AND 0X1F
+		JR NZ,CMOSHELP
+		LD HL,0X6000
+		PUSH HL
+		JR START_SELECT
+
+GTSTKEY		SCF
+		LD A,0X10
+		
+CMOSHELP	LD HL,BONUADR		;CMOS setup & HELP
+		LD DE,0X6000		;€‘€ŠŽ‚Š€ ˆ ‡€“‘Š CMOS SETUP
+		PUSH DE
+		PUSH AF
+		CALL DEC40
+		POP AF
+		JR START_SELECT
+
+GDEMO		LD HL,0X6000-szdemoini
+		LD SP,HL
+		EX DE,HL
+		PUSH DE
+		LD HL,DEMO
+		LD B,3
+		LDIR
+
+START_SELECT	PUSH AF
+		LD D,A
+		LD HL,0X5C07
+		LD (HL),0XC9
+		DEC HL
+		LD (HL),0XF1
+		DEC HL
+		LD (HL),0X79
+		DEC HL
+		LD (HL),0XED
+		DEC HL		;®¡­ã«ï¥¬ ª ¥¢áª¨© ¯®àâ ª®­ä¨£ãà æ¨©
+		LD (HL),0X1F
+		DEC HL
+		LD (HL),0X06
+		DEC HL
+		LD (HL),0XAF
+		DEC HL
+		LD (HL),0X79
+		DEC HL
+		LD (HL),0XED
+		LD A,D
+		LD BC,0X7FFD
+		JP (HL)
+	
+BONUADR		BINCLUDE cmosset_pack.rom
+
+LOADADR		BINCLUDE main_pack.rom
+
+CHARS		BINCLUDE chars_pack.bin
+
+	       	DUPL 0X3D2F-$,0XFF
+
+		ORG 0X3D2F
+		NOP
+		RET
+
+DEMO		LD BC,0X7FFD
+		LD A,0X10
+		OUT (C),A
+		EI
+szdemoini	EQU $-DEMO
+
+		BINCLUDE grass.bin
+
+		INCLUDE dec40.a80
+
+;TRSTRAM		DB 0X83,0X7A,0X7D,0XFF,0X00,0X7A,0X7D,0XFF
+
+;TFAPC		DB 0XF1,0XE1,0XD1,0XC1,0XC1,0XB1,0XA1,0X91
+;		DB 0X41,0X21,0X31,0X11,0X01,0X01,0XF1,0XE1
+
+;TRSTPAL		DB 0X00,0X21,0X42,0X63,0X90,0XB1,0XD2,0XF3
+;		DB 0XE0,0XE1,0XE2,0XE3,0XF0,0XF1,0XF2,0XF3
+
+;€ ‚•Ž„…: H-€„…‘ Ÿ—…‰Šˆ
+;	   L-Ž—ˆ’€Ž… ‡€—…ˆ…
+READCMOS	PUSH BC
+		LD BC,SYSREG_EFF7
+		LD A,CMOS_ON
+		OUT (C),A
+		LD B,HIGH (SET_ADR_CMOS)
+		OUT (C),H
+		LD B,HIGH (RD_WR_CMOS)
+		IN L,(C)
+		JR OFF_CMOS
+
+;€ ‚•Ž„…: H-€„…‘ Ÿ—…‰Šˆ
+;	   L-—’Ž ’“„€ ‡€ˆ‘€’œ
+WRITECMOS	PUSH BC
+		LD BC,SYSREG_EFF7
+		LD A,CMOS_ON
+		OUT (C),A
+		LD B,HIGH (SET_ADR_CMOS)
+		OUT (C),H
+		LD B,HIGH (RD_WR_CMOS)
+		OUT (C),L
+OFF_CMOS	XOR A				;CMOS_OFF
+		LD B,HIGH (SYSREG_EFF7)
+		OUT (C),A
+		POP BC
+		RET
+		
+		DUPL 0X3FF8-$,0XFF
+
+		DB "HEGLUK"
+		DW DATA

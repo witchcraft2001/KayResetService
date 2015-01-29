@@ -1,0 +1,18 @@
+	DEVICE ZXSPECTRUM48
+
+	ORG #0000
+LOAD	incbin "dos504t_las.bin"
+
+	ORG LOAD+#0015
+	JP 0x1001
+	ORG LOAD+#1000
+	DB 0
+	LD HL,(#5CF8)
+	LD A,H
+	SUB L
+	JP NZ,#001B
+        LD A,(#5D19)
+	SUB L
+	JP NZ,#001B
+	JP 
+       	SAVEBIN "sos128_las.rom",0,#4000

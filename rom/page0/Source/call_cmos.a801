@@ -1,0 +1,241 @@
+TEST_CMOS	XOR A				;Ž‚…Š€ € €‹ˆ—ˆ… RTC ˆ‹ˆ EEPROM
+		LD (RTC_TYPE),A
+		LD H,0x0A				
+		CALL READCMOS_GLUK		;—’…ˆ… ‘…Š“„ ˆ‡ GLUK_RTC „‹Ÿ Ž…„…‹…ˆŸ ˆ• €‹ˆ—ˆŸ
+		INC L
+		JR Z, TEST_EEPROM
+		
+		XOR A				; CY = 0
+		INC A
+		LD (RTC_TYPE),A			; ’ˆ  = GLUK_RTC
+		RET
+TEST_EEPROM	CALL set_adr			; Ž‚…Š€ €‹ˆ—ˆŸ EEPROM ‚ Š‹€‚ˆ€’“ŽŒ ŠŽ’Ž‹‹…… BY CARO
+		RET C				; …’ EEPROM
+		LD A, 2
+		LD (RTC_TYPE), A		; ’ˆ  = CARO EEPROM
+		XOR A				;
+		RET
+
+FLUSH_EEPROM					;‘Ž•€…ˆ… €‘’Ž…Š ‚ EEPROM, …‘‹ˆ ˆŒ…ž’‘Ÿ ˆ‡Œ……ˆŸ
+		LD A, (EEPROM_FLAG)
+		AND A				;…‘‹ˆ ”‹€ƒ = 0, ’Ž ˆ‡Œ……ˆ‰ … ›‹Ž
+		RET Z
+		LD DE, EEPROM_DATA
+		LD H,0
+EEPROM_NCELL1	CALL rd_eeprom
+		LD A,(DE)
+		CP L
+		JR Z, EEPROM_NCELL2
+		LD L,A
+		CALL wr_eeprom
+EEPROM_NCELL2
+		INC DE
+		INC H
+		JR NZ,EEPROM_NCELL1
+		XOR A				; Ž“‹Ÿ…Œ ”‹€ƒ ˆ‡Œ……ˆ‰
+		LD (EEPROM_FLAG),A
+		RET
+READ_ALL_EEPROM 				; —’…ˆ… ‚‘…‰ €ŒŸ’ˆ ‚ “”…
+		LD A,(RTC_TYPE)			
+		CP 2				; …‘‹ˆ … €‰„… CARO-EEPROM, ’Ž ‚›•Ž„
+		RET NZ
+		LD DE, EEPROM_DATA
+		LD H,0
+READ_AE_NCELL1	CALL rd_eeprom
+		LD L,A
+		LD (DE),A
+		INC DE
+		INC H
+		JR NZ, READ_AE_NCELL1
+		XOR A				; Ž“‹Ÿ…Œ ”‹€ƒ ˆ‡Œ……ˆ‰
+		LD (EEPROM_FLAG),A
+		RET
+
+
+RTC_TYPE	DB 0				;’ˆ …ƒŽ…‡€‚ˆ‘ˆŒŽ‰ €ŒŸ’ˆ
+EEPROM_FLAG	DB 0				;”‹€ƒ ˆ‡Œ……ˆ‰ ‚ EEPROM
+;0 - Ž’‘“’‘’‚“…’
+;1 - GLUK_RTC
+;2 - CARO EEPROM
+
+;€ ‚•Ž„…: H-€„…‘ Ÿ—…‰Šˆ
+;	   L-Ž—ˆ’€Ž… ‡€—…ˆ…
+READCMOS	LD A, (RTC_TYPE)
+		AND A
+		RET Z
+		DI
+		DEC A
+		JR Z, READCMOS_GLUK
+;		CALL rd_eeprom	; CARO EEPROM
+		PUSH HL		; —’…ˆ… „€›• ˆ‡ “”…€ EEPROM
+		PUSH DE
+		LD A,L
+		LD L,H
+		LD H,0
+		LD DE,EEPROM_DATA
+		ADD HL,DE
+		LD A,(HL)
+		POP DE
+		POP HL
+		LD L,A
+		AND A
+		EI
+		RET
+READCMOS_GLUK	PUSH BC		
+		LD BC,SYSREG_EFF7
+		LD A,(SYSREG1)
+		OR CMOS_ON
+		OUT (C),A
+		LD B,HIGH (SET_ADR_CMOS)
+		OUT (C),H
+		LD B,HIGH (RD_WR_CMOS)
+		IN L,(C)
+		JR OFF_CMOS
+
+;€ ‚•Ž„…: H-€„…‘ Ÿ—…‰Šˆ
+;	   L-—’Ž ’“„€ ‡€ˆ‘€’œ
+WRITECMOS	LD A, (RTC_TYPE)
+		AND A
+		RET Z
+		DI
+		DEC A
+		JR Z, WRITECMOS_GLUK1
+		PUSH DE
+		PUSH HL
+		LD A,L
+		LD L,H
+		LD H,0
+		LD DE,EEPROM_DATA
+		ADD HL,DE
+		LD (HL),A
+		POP HL
+		POP DE
+		LD A,1
+		LD (EEPROM_FLAG),A
+		JR END_CMOS
+;wr_eeprom	; CARO EEPROM
+WRITECMOS_GLUK1	PUSH BC
+		LD BC,SYSREG_EFF7
+		LD A,(SYSREG1)
+		OR CMOS_ON
+		OUT (C),A
+		LD B,HIGH (SET_ADR_CMOS)
+		OUT (C),H
+		LD B,HIGH (RD_WR_CMOS)
+		OUT (C),L
+OFF_CMOS	LD A,(SYSREG1)
+		LD B,HIGH (SYSREG_EFF7)
+		OUT (C),A
+		POP BC
+END_CMOS	LD A,L
+		AND A
+		EI
+		RET
+
+;…‘‹ˆ ‚ €‰’… ŠŒŽ‘ Ž ‘Œ…™…ˆž 0X11 … 0XAA ˆ‹ˆ 0X55, ’Ž ŠŒŽ‘ ‘—ˆ’€…’‘Ÿ ‡€Ž‹… …ˆ‡‚…‘’Ž —…Œ
+;ˆ‹ˆ ’Ž …‚Ž… ‚Š‹ž—…ˆŸ. ‡€ˆ‘›‚…Œ „…”Ž‹’›… ‡€—…ˆŸ ‚ ŠŒŽ‘.
+SET_CMOS_DEFAULT
+		LD DE,CMOS_DEFAULT
+		LD H,0X0A
+		LD B,9
+SCD1		EX DE,HL
+		LD E,(HL)
+		INC HL
+		EX DE,HL
+		CALL WRITECMOS
+		INC H
+		DJNZ SCD1
+		RET
+
+;€‘…—€’Š€ € Š€… ‚…Œ…ˆ, „€’› ˆ „Ÿ …„…‹ˆ
+PRINTTIME	LD A,(FLAGS)
+		AND 4
+		RET Z			;—€‘› … Ž€“†…›, ‚›•Ž„ˆŒ ˆ—…ƒŽ … ‚›‚Ž„Ÿ
+		LD H,0X0C
+		CALL READCMOS
+		AND 0X10
+		RET Z			;…‘‹ˆ ‚…ŒŸ …™… … ŽŽ‚ˆ‹Ž‘œ, ‚›•Ž„ˆŒ ˆ—…ƒŽ … ‚›‚Ž„Ÿ
+		LD H,0X11
+		CALL READCMOS
+		CP 0X55
+		RET Z			;Ž’Ž€†…ˆ… ‚›Š‹ž—…Ž, ‚›•Ž„ˆŒ ˆ—…ƒŽ … ‚›‚Ž„Ÿ
+		DI
+		EXX
+		LD BC,TXT_TIME			;—’…ˆ… ˆ …Ž€‡Ž‚€ˆ… ‚…Œ…ˆ
+		LD H,4
+		CALL READCMOS			;Ž—ˆ’€‹ˆ —€‘›
+		CALL BYTE2TXT			;‘ŠŽ‚…’ˆ‹ˆ —€‘› ‘ “Š‹€„ŠŽ‰ ‚ “”…
+		LD A,(BC)
+		XOR 0X1A			;ŠŽ‚…‘ˆŸ Œˆƒ€ž™…ƒŽ „‚Ž…’Ž—ˆŸ
+		LD (BC),A
+		INC BC
+		LD H,2
+		CALL READCMOS			;Ž—ˆ’€‹ˆ Œˆ“’›
+		CALL BYTE2TXT			;‘ŠŽ‚…’ˆ‹ˆ —€‘› ‘ “Š‹€„ŠŽ‰ ‚ “”…
+		LD A,(BC)
+		XOR 0X1A			;ŠŽ‚…‘ˆŸ Œˆƒ€ž™…ƒŽ „‚Ž…’Ž—ˆŸ
+		LD (BC),A
+		INC BC
+		LD H,0
+		CALL READCMOS			;Ž—ˆ’€‹ˆ ‘…Š“„›
+		CALL BYTE2TXT
+		LD BC,TXT_DATA			;„€‹…… —’…ˆ… ˆ …Ž€‡Ž‚€ˆ… „€’›
+		LD H,7
+		CALL READCMOS
+		CALL BYTE2TXT
+		INC BC
+		LD H,8
+		CALL READCMOS
+		CALL BYTE2TXT
+		INC BC
+		LD H,9
+		CALL READCMOS
+		CALL BYTE2TXT
+		LD HL,BUFF_TIME			;…—€’…Œ ‚…ŒŸ ˆ‡ “”…€
+		CALL NEXT
+		EXX
+		EI
+		RET
+
+;……‚Ž„ "A" ‚ „…‘Ÿ’ˆ—Š“ ˆ ‚ ’…Š‘’
+A2TXT		PUSH HL
+		LD L,A
+		LD H,0
+		LD DE,10
+		XOR A
+		DEC A
+		INC A
+		SBC HL,DE
+		JR NC,$-3
+		ADD HL,DE
+		ADD A,"0"
+		LD D,A
+		LD A,L
+		ADD A,"0"
+		POP HL
+		LD (HL),D
+		INC HL
+		LD (HL),A
+		INC HL
+		RET
+
+BYTE2TXT	LD DE,0X10
+BYTE2TXT2	LD L,A
+		XOR A
+		LD H,A
+		DEC A
+BYTE2TXT1	INC A
+		SBC HL,DE
+		JR NC,BYTE2TXT1
+		ADD HL,DE
+		ADD A,"0"
+		LD (BC),A
+		INC BC
+		LD A,"0"
+		ADD A,L
+		LD (BC),A
+		INC BC
+		RET
+
+		include caro_eeprom.a80
+EEPROM_DATA	DS 256

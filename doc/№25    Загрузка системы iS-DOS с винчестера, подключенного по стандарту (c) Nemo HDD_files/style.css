@@ -1,0 +1,193 @@
+/* Base styles */
+BODY { width:100%; margin:0; padding: 0; background-color: #eee; }
+BODY, P, TD { font: 9pt Georgia, Arial, Helvetica, sans-serif; }
+P { padding: 2px 0px; margin: 0; }
+SMALL {font-size: 8pt}
+A { text-decoration: none; color: #007; border:none; }
+A:hover { text-decoration: underline; color: #228; }
+PRE { FONT-FAMILY: monaco, "Bitstream Vera Sans Mono", "Courier New", courier, monospace; }
+BLOCKQUOTE { background-color: #ffd; padding: 0.5em 1em 0.3em 1em; margin: 1em;}
+HR { border: none; border-bottom: 1px solid #444 }
+UL { padding: 0; padding-left: 1em; }
+
+/* Main menu */
+DIV.menu, DIV.menu2 { padding: 10px; margin: 0 10px; }
+DIV.menu DIV, DIV.menu2 DIV {
+	color: #ffffff;
+	padding: 1px 0;
+	font: 10px Verdana, Arial, Helvetica, sans-serif; 
+	font-weight: bold;	
+	text-transform: uppercase;
+	text-align: right;  
+	white-space: nowrap; 
+}
+DIV.menu2 DIV {
+	font-size: 11px; 
+	text-align: left;
+}
+DIV.menu A, DIV.menu2 A { color: #ffffff; }
+DIV.menu A:hover, DIV.menu2 A:hover { text-decoration: none; color: #bbddff; }
+
+DIV.menu DIV IMG {
+	position: relative;
+	left: -3px;
+	top: -1px;
+	width: 5px;
+	height: 5px;
+}
+
+/* Main window */
+
+/* Begin IEWin Fix \*/
+* HTML .inbox {HEIGHT: 1px}
+* HTML .inbox {WIDTH: 98%}
+/* End of IEWin Fix */
+
+#img_left { float: left; padding: 0.5em 1.2em; }
+#img_right { float: right; padding: 0.5em 1.2em; }
+#img_left IMG { border: none }
+#img_right IMG { border: none }
+
+DIV.block1col {
+	padding: 1em;
+}
+
+TABLE.block {
+	border: 0px;
+	border-collapse: collapse;		
+}
+
+TABLE.block TD {
+	vertical-align: top;
+}
+
+TABLE.block TD.left {
+	width:17em; 
+	padding: 1em 0 1em 1em;
+}
+
+TABLE.block TD.center {
+	width:100%; 
+	padding: 1em;
+}
+
+TABLE.block TD.right {
+	width:17em; 
+	padding: 1em 1em 1em 0;
+}
+
+
+DIV.box {
+	border: 1px solid #444;
+	background-color: #fff;	
+	margin-bottom: 1em;	
+}
+
+DIV.inbox {	
+	padding: 0.5em 1em; 
+}
+DIV.inbox LI { 
+	list-style-type: square; padding: 0.1em; padding-left: 0.5em;
+}
+
+DIV.block DIV.box DIV.inbox { 
+	text-align: justify; 
+}
+
+DIV.boxlabel {
+    padding: 0.2em 0.7em;
+    margin: 0;
+    background-color: #395798;    
+    color: white;
+    font: 8pt Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;  
+    text-transform: uppercase;
+}
+
+DIV.boxlabel SPAN.comment {
+    font-size: 7pt;
+    font-weight: normal;  
+    text-transform: none;
+}
+
+DIV.inbox DIV.comment {
+	padding-left: 1.5em;
+	color: #333;
+	font-size: 8pt;
+}
+
+DIV.inbox H3 {
+	font: 12pt Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;	
+	color: black;
+	padding: 1em 0 0.3em 0;
+	margin: 0;
+}
+
+DIV.inbox H4 {
+	font: 10pt Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;	
+	color: black;
+	padding: 0.8em 0 0.3em 0;
+	margin: 0;
+}
+
+/* Classes afrer formatting by forum's parser */
+IMG.postiimg { border: 1px solid #888 }
+IMG.postimg { border: none }
+DIV.codebox { margin: 5px 15px 15px 15px; padding: 8px;  border: 1px dotted #666;  background-color: #eee; }
+DIV.incqbox {WIDTH: 100%; OVERFLOW: hidden}
+DIV.scrollbox {WIDTH: 100%; OVERFLOW: auto}
+
+.news { padding-top: 1em; }
+.news .item { padding-bottom: 1em; }
+.news .item .subject { 
+	text-align: left;
+	font: 10pt Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;	
+	background-color: #ccc;
+	padding: 0.2em 0.5em;	
+	margin-bottom: 0.5em;
+	white-space: nowrap;
+}
+
+.stats .head {
+	font: 9pt Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.stats TD {
+	border-top: 1px dotted #999; padding: 0.4em 0; width: 100%;
+	font: 8pt Verdana, Arial, Helvetica, sans-serif;
+}
+.stats TD.i { 
+	font-weight: bold;
+	text-align: right;
+}
+
+.toc UL {
+	margin: 0; padding: 0;
+}
+
+.toc UL LI {
+	float: left; list-style-type: none; padding: 0 0.2em 0 0;
+}
+
+.search INPUT {
+    border: 1px solid #005dab;
+	font: 8pt Verdana, Arial, Helvetica, sans-serif;
+	padding: 0.2em 0.5em;
+}
+
+.search #find_button {
+	float: right; text-align: right; 
+	position: relative; top: -5px;
+	cursor: pointer;
+}
+
+.hot-icon {
+ background-color:#000000;
+ color:#FF0000;
+ font:bold 7.5pt Tahoma,Arial,Helvetica,sans-serif;
+ margin-right:5px;
+ padding:1px 5px;
+}

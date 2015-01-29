@@ -1,0 +1,444 @@
+body {
+    color: white;
+    background-color: #202020;
+    font-family: Sans, Verdana;
+    text-align: center;
+    overflow: scroll;
+    margin: 0;
+    padding: 0;
+}
+
+body, table {
+    font-family: Sans, Verdana;
+    font-size: 14px;
+}
+
+.shapka, .msg_header, .yearblock, .echolist, .pager a, .pager div {
+    border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 10px #101010;
+    -webkit-box-shadow: 0 0 10px #101010;
+    -moz-box-shadow: 0 0 10px #101010;
+}
+
+.echomenu {
+    width: 1024px;
+    margin: 0 auto 1em auto;
+    text-align: center;
+    /*border-top: 1px solid #606060;
+    border-bottom: 1px solid #606060;*/
+}
+
+.shapka {
+    width: 512px;
+    height: 80px;
+    padding: 1em 0 0 0;
+    margin: 14px auto;
+    background-color: #505050;
+    border: 1px solid #585858;
+    font-size: 12px;
+    color: black;
+    text-align: center;
+}
+
+.shapka h1 {
+    font-size: 20px;
+    margin: 1em 0 4px 0;
+    font-weight: normal;
+    text-align: center;
+    color: white;
+}
+
+.years {
+    width: 1024px;
+    margin: 0 auto;
+}
+
+.years .hdr {
+    margin: 1em auto;
+    color: silver;
+    text-align: center;
+}
+
+.years .read {
+    text-align: center;
+    font-size: 16px;
+}
+
+.yearblock {
+    width: 236px;
+    height: 280px;
+    display: block;
+    float: left;
+    margin: 10px;
+    background-color: #303030;
+}
+
+.yearblock a.yr {
+    display: block;
+    font-size: 16px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.yearblock a.mn {
+    display: block;
+    font-size: 14px;
+    text-align: left;
+    margin: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: #00a0a0;
+}
+
+.msg_list {    
+    width:1024px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.msg_list span {
+    display: block;
+    float: left;
+    margin: 1px;
+    padding: 0;
+    height: 18px;
+    overflow: hidden;
+}
+
+.msg_list i {
+    padding:  0 0 0 10px;
+    display: block;
+    font-style: normal;
+}
+
+.msg_list div, .msg_list a {
+    display: block;
+    width: 1024px;
+}
+
+.msg_list div .c1, .msg_list div .c2, .msg_list div .c3, .msg_list div .c4, .msg_list div .c5 {
+    background-color: #404040;
+}
+
+/*.msg_list a.list {
+    text-decoration: none;
+    color: white;
+}*/
+
+.msg_list a {
+    color: gray;
+}
+
+.msg_list a:hover {
+    color: white;
+}
+
+.msg_list .c1 {
+    width: 68px;
+}
+
+.msg_list .c2, .msg_list .c3 {
+    width: 198px;
+    overflow: hidden;
+}
+
+.msg_list .c4 {
+    width: 118px;
+}
+
+.msg_list .c5 {
+    width: 408px;
+}
+
+.hdr {
+    clear: both;
+}
+
+.hdr span {
+    background-color: #404040;
+}
+
+.msg_header {
+    clear: both;
+    text-align: left;
+    color: gray;
+    background-color: #303030;
+    padding: 1em;
+    font-family: "Courier New";
+    font-size: 16px;
+}
+
+.msg_header span {
+    color: silver;
+}
+
+.msg_header .date {
+    color: darkseagreen;    
+}
+
+.msg_header .fromname {
+    color: lightgreen;
+}
+
+.msg_header .fromaddr {
+    color: yellowgreen;
+}
+
+.msg_header .toname {
+    color: khaki;
+}
+
+.msg_header strong {
+    font-weight: normal;
+    color: white;
+}
+
+.pager {
+    clear: both;
+    padding: 1em 0 0 0;
+}
+
+.pager a, .pager div {
+    float: left;
+    display: block;
+    margin-right: 1em;
+    width: 28px;
+    height: 28px;
+    background-color: #484848;
+    text-align: center;
+}
+
+.pager a {
+    color: silver;
+}
+
+.pager div {
+    color: black;
+}
+
+.pager a:hover {
+    background-color: #585858;
+    color: whitesmoke;
+}
+
+.pager span {
+    margin: 5px 0 0 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.pager a span {
+    cursor: pointer;
+}
+
+.msg_nav {
+    clear: both;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.msg_nav, .pager {
+    width: 1024px;
+    text-align: left;
+}
+
+.msg_nav span {
+    display: block;
+    float: left;
+    width: 204px;
+    height: 28px;
+    font-size: 13px;
+}
+
+.msg_nav span a {
+    display: block;
+    margin-top: 7px;
+}
+
+.msg_nav span.left {
+    text-align: left;
+}
+
+.msg_nav span.center {
+    text-align: center;
+}
+
+.msg_nav span.right {
+    text-align: right;
+}
+
+.msg_view {
+    clear: both;
+    margin: 0 auto;
+    width: 1024px;
+}
+
+.msg_view .left {
+    width: 768px;
+    padding: 1em 0;
+}
+
+.msg_view .right {
+    width: 256px;
+    padding: 1em;
+    text-align: right;
+}
+
+.msg_view pre {
+    margin: 0 1em;
+    font-family: "Courier New";
+    /*font-family: Sans, Verdana;*/
+    font-size: 16px;
+    color: lightgray;
+    display: block;
+    text-align: left;
+}
+
+.q1 {
+    color: darkgreen;
+}
+
+.q2 {
+    color: darkgoldenrod;
+}
+
+.q3 {
+    color: darkcyan;
+}
+
+.q4 {
+    color: darkolivegreen;
+}
+
+.tearline {
+    color: indianred;
+}
+
+.tagline {
+    color: goldenrod;
+}
+
+.origin {
+    color: dodgerblue;
+}
+
+.stars {
+    color: silver;
+}
+
+.maintab {
+    width: 1024px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.header {
+    height: 80px;
+    text-align: center;
+}
+
+.main {
+    vertical-align: top;
+    text-align: center;
+}
+
+.list {
+    padding-bottom: 1em;
+}
+
+.nav {
+    padding: 0 0 1em 0;
+}
+
+.podval {
+    height: 50px;
+}
+
+/* */
+
+.echolist {
+    margin: 0 auto;
+    font-size: 14px;
+    background-color: #303030;
+    width: 512px;
+}
+
+.echolist td {
+    padding: 2em;
+}
+
+.echolist a.list_el {
+    display: block;
+    margin-bottom: 1em;
+    font-size: 14px;
+}
+
+.echolist a.list_el span {
+    font-size: 18px;
+    display: block;
+}
+
+.echolist center {
+    font-size: 16px;
+    margin: 0 0 2em auto;
+    color: silver;
+}
+
+.echolist p {
+    color: gray;
+    text-align: justify;
+    text-indent: 3em;
+}
+
+.echolist p.right {
+    text-align: right;
+}
+
+.echolist p b {
+    font-weight: normal;
+    color: white;
+}
+
+.echolist p i {
+    font-style: normal;
+    color: lightgreen;
+}
+
+.searchform {
+    width: 512px;
+    margin: 0 auto 1em auto;
+}
+
+.lnk {
+    color: darkgray;
+    font-size: 10px;
+    margin-bottom: 2em;
+}
+
+div.lnk {
+    text-align: left;
+}
+
+.msg_nav input {
+    padding: 0;
+    margin: 7px 0 0 0;
+    border: none;
+    color: white;
+    background-color: #202020;
+    font-family: Sans, Verdana;
+}
+
+.msg_nav input:hover {
+    color: #00a0a0;
+    cursor: pointer;
+}
